@@ -31,6 +31,26 @@ def handler(event):
         metric_data.append(create_cluster_node_metric(
             'Ops', node['interestingStats']['ops'],
             cluster_name, node['hostname'], node['nodeUUID'], 'None'))
+        metric_data.append(create_cluster_node_metric(
+            'Mem_used', node['interestingStats']['mem_used'],
+            cluster_name, node['hostname'], node['nodeUUID'], 'None'))
+
+        metric_data.append(create_cluster_node_metric(
+            'Cpu_utilization_rate', node['systemStats']['cpu_utilization_rate'],
+            cluster_name, node['hostname'], node['nodeUUID'], 'None'))
+
+        metric_data.append(create_cluster_node_metric(
+            'Mem_free', node['systemStats']['mem_free'],
+            cluster_name, node['hostname'], node['nodeUUID'], 'None'))
+
+        metric_data.append(create_cluster_node_metric(
+            'Mem_total', node['systemStats']['mem_total'],
+            cluster_name, node['hostname'], node['nodeUUID'], 'None'))
+
+        metric_data.append(create_cluster_node_metric(
+            'Mem_limit', node['systemStats']['mem_limit'],
+            cluster_name, node['hostname'], node['nodeUUID'], 'None'))
+
 
     if 'buckets' in event:
         buckets = event['buckets']
