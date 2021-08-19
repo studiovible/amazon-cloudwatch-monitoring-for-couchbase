@@ -55,3 +55,12 @@ To achieve this in an automated way you *can* consider the following options
    ```shell
    * * * * * /opt/aws/couchbase-monitor/metrics-cloudwatch.sh user password bucket1,bucket2
    ```
+
+## How To Run
+
+```
+./metrics-cloudwatch.sh -n {Cloudwatch Metric Namespace} -u {cb username} -p {cb password} -b {bucket} -c {cb container_name}
+```
+```
+./metrics-cloudwatch.sh -n Couchbase -u vible -p vible500 -b vible -c cb-junit
+```

@@ -76,8 +76,8 @@ def handler(event):
             create_bucket_metric('Sets', bucket_monitor_response['op']['samples']['cmd_set'],
                                  cluster_name, bucket, 'None'))
 
-    stream = os.popen('docker exec -i db3 /opt/couchbase/bin/cbstats localhost all -j -u {} -p {} -a'.format(
-        event['username'], event['password']))
+    stream = os.popen('docker exec -i {} /opt/couchbase/bin/cbstats localhost all -j -u {} -p {} -a'.format(
+        event['container_name'], event['username'], event['password']))
     cbstats_output = stream.read()
     cbstats_lines = cbstats_output.split(cbstats_output_delimiter)
 
@@ -163,5 +163,5 @@ def get_monitoring_details(url, auth):
     return json.loads(u.read())
 
 
-print(handler({'username': sys.argv[1], 'password': sys.argv[2], 'buckets': sys.argv[3].split(',')}))
+print(handler({'username': sys.argv[1], 'password': sys.argv[2], 'buckets': sys.argv[3].split(','), 'container_name': sys.argv[4]}))
 sys.exit(0)
