@@ -8,8 +8,11 @@ TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-meta
 EC2_AVAIL_ZONE=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone)
 EC2_REGION="`echo \"$EC2_AVAIL_ZONE\" | sed 's/[a-z]$//'`"
 
-while getopts ":u:p:b:" opt; do
+while getopts ":n:u:p:b:" opt; do
   case $opt in
+  n)
+    namespace="$OPTARG"
+    ;;
   u)
     c_username="$OPTARG"
     ;;
@@ -19,6 +22,7 @@ while getopts ":u:p:b:" opt; do
   b)
     buckets="$OPTARG"
     ;;
+  
   \?)
     echo "Invalid option -$OPTARG" >&2
     ;;
@@ -27,4 +31,4 @@ done
 
 metric_data=$(python couchbase_monitor_cli.py "${c_username}" "${c_password}" "${buckets}" 0>&1)
 
-aws cloudwatch put-metric-data --namespace "Couchbase" --metric-data "${metric_data}" --region "${EC2_REGION}"
+aws cloudwatch put-metric-data --namespace "${namespace}" --metric-data "${metric_data}" --region "${EC2_REGION}"

@@ -56,7 +56,7 @@ def handler(event):
             create_bucket_metric('Sets', bucket_monitor_response['op']['samples']['cmd_set'],
                                  cluster_name, bucket, 'None'))
 
-    stream = os.popen('/opt/couchbase/bin/cbstats localhost all -j -u {} -p {} -a'.format(
+    stream = os.popen('docker exec -i db3 /opt/couchbase/bin/cbstats localhost all -j -u {} -p {} -a'.format(
         event['username'], event['password']))
     cbstats_output = stream.read()
     cbstats_lines = cbstats_output.split(cbstats_output_delimiter)
