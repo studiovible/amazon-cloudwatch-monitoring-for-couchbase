@@ -29,6 +29,6 @@ while getopts ":n:u:p:b:" opt; do
   esac
 done
 
-metric_data=$(python couchbase_monitor_cli.py "${c_username}" "${c_password}" "${buckets}" 0>&1)
+metric_data=$(python /home/ec2-user/amazon-cloudwatch-monitoring-for-couchbase/cli_monitoring/couchbase_monitor_cli.py "${c_username}" "${c_password}" "${buckets}" 0>&1)
 
 aws cloudwatch put-metric-data --namespace "${namespace}" --metric-data "${metric_data}" --region "${EC2_REGION}"
