@@ -36,8 +36,7 @@ DIR="$( cd "$( dirname "$0" )" && pwd -P )"
 metric_data=$(python "$DIR"/couchbase_monitor_cli.py "${c_username}" "${c_password}" "${buckets}" "${container_name}" 0>&1)
 
 metric_data1=$(echo $metric_data | jq -c '.[0:20]')
-metric_data2=$(echo $metric_data | jq -c '.[20:20]')
-
+metric_data2=$(echo $metric_data | jq -c '.[20:40]')
 
 aws cloudwatch put-metric-data --namespace "${namespace}" --metric-data "${metric_data1}" --region "${EC2_REGION}"
 
